@@ -1,10 +1,17 @@
 import tkinter as tk
+#tkinder is a python library for creating GUI
 from tkinter import filedialog, messagebox
+#filedialog is a module for file selection dialogue
+#messagebox is used for pop up messages
 from PIL import Image, ImageTk
+#Pillow(PIL) is a library for handling and displaying images
 import cv2
+#cv2 is a library for image processing task
 import numpy as np
+#numpy is used to perform numerical calculations and creating multidimensional array
 import firebase_admin
 from firebase_admin import credentials, firestore
+# firebase_admin used for initializing firebase admin using the credentials
 
 # Initialize Firebase Admin SDK
 def initialize_firebase():

@@ -28,6 +28,8 @@ def detect_fake_logo(reference_path, image_path):
     # Load the uploaded image and the reference logo image
     uploaded_img = cv2.imread(image_path)
     reference_logo = cv2.imread(reference_path, cv2.IMREAD_GRAYSCALE)
+    #here reference logo (here reference logo contains rgb color of different intensity, so it) is being converted to grayscale (so that compiler had only one 
+    #color) for template matching, which makes the code faster. 
 
     if uploaded_img is None or reference_logo is None:
         return "Error loading images"
@@ -38,6 +40,7 @@ def detect_fake_logo(reference_path, image_path):
     # Perform template matching
     result = cv2.matchTemplate(uploaded_gray, reference_logo, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    #finds the best match and return it's value to max_val
 
     # Set a threshold to decide whether the logo is genuine or fake
     threshold = 0.8  # You can adjust this threshold value
@@ -68,8 +71,9 @@ def upload_target_logo():
     img = Image.open(file_path)
     img = img.resize((300, 300))  # Resize for display purposes
     img_tk = ImageTk.PhotoImage(img)
-    panel.config(image=img_tk)
-    panel.image = img_tk
+    # ImageTk is used so that the image processed can be converted to a format which can be accessed by tkinder so that the image can be used for GUI.
+    panel.config(image=img_tk)#set image in panel
+    panel.image = img_tk #prevent garbage collection
 
     # Check if the reference logo has been uploaded
     if not reference_logo_path:
@@ -106,9 +110,11 @@ reference_logo_path = None
 # Upload buttons
 upload_reference_btn = tk.Button(root, text="Upload Reference Logo", command=upload_reference_logo)
 upload_reference_btn.pack(pady=10)
+#This will provide you with a button of Upload Reference Logo
 
 upload_target_btn = tk.Button(root, text="Upload Logo to Detect", command=upload_target_logo)
 upload_target_btn.pack(pady=10)
+#This will provide you with a button of Upload Logo to Detect
 
 # Panel to display the image
 panel = tk.Label(root)
